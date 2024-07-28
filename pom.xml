@@ -94,7 +94,7 @@
                     <reuseForks>true</reuseForks>
                     <suiteXmlFiles>
                         <suiteXmlFile>
-                            src/test/resources/TestRunners/testng.xml
+                            src/test/resources/TestRunner/testng.xml
                         </suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
