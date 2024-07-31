@@ -1,30 +1,25 @@
 package org.qa.flipkart.base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qa.flipkart.browserFactory.BrowserFactory;
-import org.qa.flipkart.browserFactory.BrowserStackFactory;
-import org.qa.flipkart.dataProvider.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 public class BaseClass {
 
     protected WebDriver driver;
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    static String pageLoadStatus = null;
+
+    JavascriptExecutor js;
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
     @Parameters({ "browser", "url" })
    @BeforeMethod
@@ -33,7 +28,6 @@ public class BaseClass {
         System.out.println("Browser Name is::"+browser);
        // driver= BrowserFactory.startBrowser(ConfigReader.getProperty("browser"),ConfigReader.getProperty("url"));
         driver= BrowserFactory.startBrowser(browser,url);
-       //driver= BrowserStackFactory.startBrowser(ConfigReader.getProperty("browser"),ConfigReader.getProperty("url"));
 
         System.out.println("LOG:INFO - Application is up and running");
         return driver;
@@ -51,8 +45,9 @@ public class BaseClass {
     }
 
 
-    protected  void waitForPageLoad(){
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    //Write explicit wait
+    public void explicitWaitUtil(By element){
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(element)));
     }
 
     protected void scrollDown(){
@@ -61,8 +56,17 @@ public class BaseClass {
        a.sendKeys(Keys.PAGE_DOWN).build().perform();
     }
 
-    protected void waitForElementToBeVisible(By element){
-       wait.until(ExpectedConditions.presenceOfElementLocated(element));
+    public  void waitForPageLoad() {
+
+        do {
+
+            js = (JavascriptExecutor) driver;
+
+            pageLoadStatus = (String)js.executeScript("return document.readyState");
+
+        } while ( !pageLoadStatus.equals("complete") );
+
+        System.out.println("Page Loaded.");
 
     }
 

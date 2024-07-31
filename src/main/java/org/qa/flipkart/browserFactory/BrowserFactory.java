@@ -33,6 +33,7 @@ public class BrowserFactory {
         {
             ChromeOptions opt=new ChromeOptions();
             driver=new ChromeDriver(opt);
+
         }
         else if(browserName.contains("Firefox"))
         {
@@ -51,14 +52,14 @@ public class BrowserFactory {
             driver=new ChromeDriver();
         }
 
+
         driver.manage().window().maximize();
-//
-//        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-//
-//        driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
-//
-//        driver.get(applicationURL);
-//
+        driver.get(applicationURL);
+
+       driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+       driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
+
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         return driver;

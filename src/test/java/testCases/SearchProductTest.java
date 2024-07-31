@@ -19,11 +19,10 @@ public class SearchProductTest extends BaseClass {
         List<WebElement> phoneName;
         List<WebElement> links;
 
-        driver.get("https://www.flipkart.com/");
+        //driver.get("https://www.flipkart.com/");
         HomePage homepage = new HomePage(driver);
         homepage.searchProductSearchTextBox("Samsung Galaxy S10");
         System.out.println("Page title is ::"+driver.getTitle());
-        //Assert.assertTrue(driver.getTitle().contains("Samsung Galaxy S10"));
         homepage.selectMobilesCategory();
         homepage.clickOnSamsungCheckboxJS();
         homepage.clickOnFlipkartAssuredCheckbox();

@@ -2,28 +2,29 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="TestNG Regression Suite" verbose="3" parallel="tests"
-       thread-count="1">
+       thread-count="2">
 
+    <test name=" Test_Firefox">
+        <parameter name="browser" value="Firefox" />
+        <parameter name="url" value="https://www.flipkart.com/mobile-phones-store" />
 
-    <test name=" Test _ chrome">
+        <classes>
+            <class name="testCases.SearchProductTestOnBrowserStack" />
+
+        </classes>
+    </test>
+
+    <test name=" Test_chrome">
         <parameter name="browser" value="Chrome" />
         <parameter name="url" value="https://www.flipkart.com/" />
 
         <classes>
-            <class name="testCases.SearchProductTest" />
+            <class name="testCases.SearchProductTestOnBrowserStack" />
 
         </classes>
     </test>
 
-    <test name=" Test _ Firefox">
-        <parameter name="browser" value="Firefox" />
-        <parameter name="url" value="https://www.flipkart.com/" />
 
-        <classes>
-            <class name="testCases.SearchProductTest" />
-
-        </classes>
-    </test>
 
 
 

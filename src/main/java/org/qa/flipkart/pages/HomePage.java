@@ -1,27 +1,23 @@
 package org.qa.flipkart.pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qa.flipkart.base.BaseClass;
-import org.testng.Assert;
-
-import java.util.LinkedList;
 import java.util.List;
 
 
 public class HomePage extends BaseClass {
-    By searchProductTestBox= By.className("Pke_EE");
-    By serachBox = By.xpath("//button[contains(@title,'Search for')]");
+    JavascriptExecutor js ;
+    By searchProductTestBox=By.xpath("//input[contains(@placeholder,'Search for')]");
+
+    By serachBoxButton = By.xpath("//button[@type='submit']");
+            //By.xpath("//button[contains(@title,'Search for')]");
 
     By categoryMobile = By.xpath("//a[@title='Mobiles']");
 
-    By samsungBrand = By.xpath("//div[text()='SAMSUNG']//preceding-sibling::input");
-    //By samsungBrand=By.cssSelector(".XqNaEv");
+    By samsungBrand = By.xpath("//div[text()='Brand']//following::img[1]//preceding::input[@type='checkbox'][2]");
 
-    By flipkartAssured = By.xpath("//div[@class='XqNaEv eJE9fb']");
+    By flipkartAssured = By.xpath("//div[text()='Brand']//following::img[1]//preceding::input[@type='checkbox'][1]");
 
     By highToLow = By.xpath("//div[contains(text(),'High to Low')]");
 
@@ -29,20 +25,17 @@ public class HomePage extends BaseClass {
 
     By phoneName = By.xpath("//div[@class='KzDlHZ']");
 
-    By price = By.xpath("//div[@class='Nx9bqj _4b5DiR']");
+    By price = By.xpath("//div[@class='cN1yYO']");
 
     By link = By.className("CGtC98");
 
-    JavascriptExecutor js ;
+    By crossButton = By.xpath("//span[@role='button']");
 
 
 
-
-    //a[text()='Mobiles']
-
-    //div[text()='SAMSUNG']
     public HomePage(WebDriver driver) {
        this.driver = driver;
+       PageFactory.initElements(driver,this);
     }
 
 
@@ -52,34 +45,24 @@ public class HomePage extends BaseClass {
     public void searchProductSearchTextBox(String searchProductName) {
         waitForPageLoad();
        driver.findElement(searchProductTestBox).sendKeys(searchProductName);
-       driver.findElement(serachBox).click();
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("arguments[0].click();",driver.findElement(serachBox));
+       clickOnElement(serachBoxButton);
+
     }
 
     public void selectMobilesCategory(){
-        driver.findElement(categoryMobile).click();
-    }
-
-    public void checkBrandsUsingJS(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();arguments[1].click();",driver.findElement(samsungBrand),driver.findElement(flipkartAssured));
+        clickOnElement(categoryMobile);
     }
 
     public void clickOnSamsungCheckboxJS(){
-        //waitForElementToBeVisible(samsungBrand);
-        js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();",driver.findElement(samsungBrand));
+        clickOnElement(samsungBrand);
     }
 
     public void clickOnFlipkartAssuredCheckbox(){
-         js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();",driver.findElement(flipkartAssured));
+        clickOnElement(flipkartAssured);
     }
 
     public void clickOnHighToLowPriceFilter(){
-        js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();",driver.findElement(highToLow));
+        clickOnElement(highToLow);
     }
 
     public List<WebElement> listOfPhones(){
@@ -102,6 +85,16 @@ public class HomePage extends BaseClass {
     public List<WebElement> listOfPhoneLinks(){
         System.out.println("Inside links");
         return driver.findElements(link);
+
+    }
+
+
+    public void clickOnElement(By element){
+        driver.navigate().refresh();
+        js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", driver.findElement(element));
+
+
 
     }
 }

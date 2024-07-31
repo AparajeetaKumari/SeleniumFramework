@@ -20,10 +20,8 @@ public class SearchProductTestOnBrowserStack extends BaseRemoteClass {
         List<WebElement> phoneName;
         List<WebElement> links;
 
-        driver.get("https://www.flipkart.com/");
         HomePage homepage = new HomePage(driver);
         homepage.searchProductSearchTextBox("Samsung Galaxy S10");
-        //Assert.assertTrue(driver.getTitle().contains("Samsung Galaxy S10"));
         homepage.selectMobilesCategory();
         homepage.clickOnSamsungCheckboxJS();
         homepage.clickOnFlipkartAssuredCheckbox();
